@@ -196,11 +196,10 @@ WHERE outersub.totalcost < 1000;
 SELECT DISTINCT m1.memid, m1.firstname, m1.surname, m1.recommendedby, m2.firstname AS recommender_fname, m2.surname AS recommender_sname
     FROM Members as m1
 	INNER JOIN Members as m2
-ON m1.memid = m2.recommendedby
-WHERE m1.memid <> 0
-AND m1.recommendedby IS NOT NULL;
-
-/*This is my attempt, but it does not give accurate result. :(
+ON m2.memid = m1.recommendedby
+WHERE m2.memid <> 0
+AND m2.recommendedby IS NOT NULL
+ORDER BY m1.surname, m1.firstname;
 
 
 /* Q12: Find the facilities with their usage by member, but not guests */
