@@ -12,9 +12,7 @@ You will complete questions 1-9 below in the PHPMyAdmin interface.
 Log in by pasting the following URL into your browser, and
 using the following Username and Password:
 
-URL: https://sql.springboard.com/
-Username: student
-Password: learn_sql@springboard
+________
 
 The data you need is in the "country_club" database. This database
 contains 3 tables:
@@ -172,7 +170,7 @@ FROM
    (SELECT sub.Facility, SUM(sub.Cost) AS totalcost
       FROM
     
-         (SELECT CONCAT (m.firstname, ' ', m.surname) AS MemberName, m.memid, b.Bookid, b.Slots, 
+         (SELECT m.firstname || ' ' || m.surname AS MemberName, m.memid, b.Bookid, b.Slots, 
             f.name AS Facility, f.Facid, b.starttime,
             CASE WHEN b.Memid = 0
                THEN f.guestcost * slots
