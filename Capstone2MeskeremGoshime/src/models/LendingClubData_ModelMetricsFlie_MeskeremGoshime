@@ -1,0 +1,24 @@
+# Gradient Boosting Model
+
+# Running Gradient Boosting Classifier with chosen parameters.
+
+gb = GradientBoostingClassifier(
+    n_estimators=600,
+    learning_rate=0.1,
+    max_depth=3)
+gb.fit(X_train, y_train)
+y_pred_gb = gb.predict(X_test)
+y_pred_probs_gb = gb.predict_proba(X_test)[:,1]
+
+# Making predictions using the optimal threshold value (using Prediction_optimal function defined a while back).
+
+pred_new_gb = pd.DataFrame({'y_test': y_test, 'y_pred_proba': y_pred_probs_gb, 'y_pred': y_pred_gb})
+bad_loans_gb = pred_new_gb[pred_new_gb['y_pred_proba']>=0.073813]
+bad_loans_gb['class_new']=1
+good_loans_gb = pred_new_gb[pred_new_gb['y_pred_proba']<0.073813]
+good_loans_gb['class_new']=0
+good_loans_gb.reset_index(drop=True, inplace=True)
+bad_loans_gb.reset_index(drop=True, inplace=True)
+pred_new_gb = pd.concat([good_loans_gb, bad_loans_gb], axis=0)
+print(pred_new_gb['class_new'].value_counts())
+print(pred_new_gb.head())
