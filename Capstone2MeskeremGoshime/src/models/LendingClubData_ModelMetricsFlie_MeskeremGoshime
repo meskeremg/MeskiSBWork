@@ -22,3 +22,27 @@ bad_loans_gb.reset_index(drop=True, inplace=True)
 pred_new_gb = pd.concat([good_loans_gb, bad_loans_gb], axis=0)
 print(pred_new_gb['class_new'].value_counts())
 print(pred_new_gb.head())
+
+# Performance Matrix
+
+fpr_gb, tpr_gb, thresholds_gb = roc_curve(y_test, y_pred_probs_gb)
+plt.plot([0,1], [0,1], 'k--')
+plt.plot(fpr_gb, tpr_gb)
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Gradient Boosting Classification ROC Curve')
+plt.show()
+
+# ROC/AUC Score
+
+print(roc_auc_score(y_test, y_pred_probs_gb))
+
+# Confusion Matrix
+
+cm_gb = confusion_matrix(y_test, y_pred_gb)
+print(cm_gb)
+
+#Classification Report
+
+cl_report_gb = classification_report(pred_new_gb['y_test'], pred_new_gb['class_new'])
+print(cl_report_gb)
